@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+    <button onclick="subscribe()">Subscribe</button>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getMessaging, getToken } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-messaging.js";
+
+        const firebaseConfig = {
+            apiKey: "",
+            authDomain: "",
+            projectId: "",
+            storageBucket: "",
+            messagingSenderId: "",
+            appId: ""
+        };
+
+        const app = initializeApp(firebaseConfig),
+            messaging = getMessaging(app);
+
+        window.subscribe = async () => {
+            navigator.serviceWorker.register("sw.js").then(registration => {
+                getToken(messaging, {
+                    serviceWorkerRegistration: registration,
+                    vapidKey: ''
+                }).then((currentToken) => {
+                    if (currentToken) console.log({ currentToken })
+                    else { console.log('No registration token available. Request permission to generate one.') };
+                }).catch((err) => { console.log('An error occurred while retrieving token. ', err) });
+            });
+        };
+    </script>
+</body>
+
+</html>
