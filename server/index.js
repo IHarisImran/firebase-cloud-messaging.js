@@ -8,7 +8,7 @@ const sendMessage = async () => {
       notification: {
         title: 'New Notification',
         body: 'Hello, this is a test notification!',
-        image: 'https://placehold.co/100'
+        imageUrl: 'https://placehold.co/100'
       },
       token
     });
